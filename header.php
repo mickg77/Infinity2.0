@@ -18,9 +18,7 @@
     <li class="nav-item">
         <a class="nav-link" href="staff.php">Staff</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="public.php">Customers</a>
-    </li>
+
     <li class="nav-item">
         <a class="nav-link" href="delete.php">Delete</a>
     </li>

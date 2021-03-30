@@ -79,5 +79,57 @@ function delete(PDO $conn){
 
 }
 
+function insert_record(PDO $conn)
+{
+    if (isset($_POST['insert_record'])) {
+        //get values from the form
+        $customer_name = $_POST['customer_name_box'];
+        $customer_address = $_POST['customer_address_box'];
+        $customer_email = $_POST['customer_email_box'];
+
+        //prepare the SQL insert
+        $stmt = "INSERT INTO customer  
+                 (customer_name, customer_address, customer_email)
+                 VALUES
+                 (:customer_name, :customer_address, :customer_email)";
+        $stmt = $conn->prepare($stmt);
+        $stmt->bindParam('customer_name', $customer_name);
+        $stmt->bindParam('customer_address', $customer_address);
+        $stmt->bindParam('customer_email', $customer_email);
+
+        $stmt->execute(); //sends the query to the sql database
+
+    }
+}//end of insert_record
+
+function update(PDO $conn)
+{
+
+    if (isset($_POST['update_record'])) {
+        $customer_id = $_POST['customer_id'];
+        $customer_name = $_POST['customer_name_box'];
+        $customer_address = $_POST['customer_address_box'];
+        $customer_email = $_POST['customer_email_box'];
+
+        $stmt = $conn->prepare("UPDATE customer
+                                SET
+                                customer_name =:customer_name,
+                                customer_address =:customer_address,
+                                customer_email =:customer_email WHERE
+                                customer_id =:customer_id;");
+        $stmt->bindParam(":customer_name", $customer_name);
+        $stmt->bindParam(":customer_address", $customer_address);
+        $stmt->bindParam(":customer_email", $customer_email);
+        $stmt->bindParam(":customer_id", $customer_id);
+
+        if ($stmt->execute()) {
+
+            echo ' <script>location.href="staff.php"</script>';
+
+        } else {
+            echo ' <script>alert("Record Not Updated")</script>';
+        }
+    }
+}
 
 ?>
